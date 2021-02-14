@@ -14,12 +14,12 @@ node_js:
   
 
 install:
-  - npm install
-  - npm install coveralls
+  - yarn
+  - yarn add coveralls
 
 script:
-  - npm run coverage
-  - npm run lint
+  - yarn run coverage
+  - yarn run lint
 
 after_success:
   - nyc report --reporter=text-lcov | coveralls
