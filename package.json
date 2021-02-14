@@ -54,9 +54,6 @@
     "source-map.d.ts",
     "lib/"
   ],
-  "publishConfig": {
-    "tag": "next"
-  },
   "engines": {
     "node": ">= 8"
   },
