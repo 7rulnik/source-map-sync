@@ -195,11 +195,11 @@ export interface SourceMapConsumerConstructor {
   GREATEST_LOWER_BOUND: number;
   LEAST_UPPER_BOUND: number;
 
-  new (rawSourceMap: RawSourceMap, sourceMapUrl?: SourceMapUrl): Promise<BasicSourceMapConsumer>;
-  new (rawSourceMap: RawIndexMap, sourceMapUrl?: SourceMapUrl): Promise<IndexedSourceMapConsumer>;
-  new (rawSourceMap: RawSourceMap | RawIndexMap | string, sourceMapUrl?: SourceMapUrl): Promise<
+  new (rawSourceMap: RawSourceMap, sourceMapUrl?: SourceMapUrl): BasicSourceMapConsumer;
+  new (rawSourceMap: RawIndexMap, sourceMapUrl?: SourceMapUrl): IndexedSourceMapConsumer;
+  new (rawSourceMap: RawSourceMap | RawIndexMap | string, sourceMapUrl?: SourceMapUrl): 
     BasicSourceMapConsumer | IndexedSourceMapConsumer
-  >;
+  ;
 
   /**
    * Create a BasicSourceMapConsumer from a SourceMapGenerator.
@@ -207,11 +207,11 @@ export interface SourceMapConsumerConstructor {
    * @param sourceMap
    *        The source map that will be consumed.
    */
-  fromSourceMap(sourceMap: SourceMapGenerator, sourceMapUrl?: SourceMapUrl): Promise<BasicSourceMapConsumer>;
+  fromSourceMap(sourceMap: SourceMapGenerator, sourceMapUrl?: SourceMapUrl): BasicSourceMapConsumer;
 
   /**
    * Construct a new `SourceMapConsumer` from `rawSourceMap` and `sourceMapUrl`
-   * (see the `SourceMapConsumer` constructor for details. Then, invoke the `async
+   * (see the `SourceMapConsumer` constructor for details. Then, invoke the `
    * function f(SourceMapConsumer) -> T` with the newly constructed consumer, wait
    * for `f` to complete, call `destroy` on the consumer, and return `f`'s return
    * value.
@@ -225,7 +225,7 @@ export interface SourceMapConsumerConstructor {
    * const xSquared = SourceMapConsumer.with(
    *   myRawSourceMap,
    *   null,
-   *   async function (consumer) {
+   *   function (consumer) {
    *     // Use `consumer` inside here and don't worry about remembering
    *     // to call `destroy`.
    *
@@ -242,8 +242,8 @@ export interface SourceMapConsumerConstructor {
   with<T>(
     rawSourceMap: RawSourceMap | RawIndexMap | string,
     sourceMapUrl: SourceMapUrl | null | undefined,
-    callback: (consumer: BasicSourceMapConsumer | IndexedSourceMapConsumer) => Promise<T> | T
-  ): Promise<T>;
+    callback: (consumer: BasicSourceMapConsumer | IndexedSourceMapConsumer) => T
+  ): T;
 }
 
 export const SourceMapConsumer: SourceMapConsumerConstructor;
@@ -258,7 +258,7 @@ export interface BasicSourceMapConsumer extends SourceMapConsumer {
 export interface BasicSourceMapConsumerConstructor {
   prototype: BasicSourceMapConsumer;
 
-  new (rawSourceMap: RawSourceMap | string): Promise<BasicSourceMapConsumer>;
+  new (rawSourceMap: RawSourceMap | string): BasicSourceMapConsumer;
 
   /**
    * Create a BasicSourceMapConsumer from a SourceMapGenerator.
@@ -266,7 +266,7 @@ export interface BasicSourceMapConsumerConstructor {
    * @param sourceMap
    *        The source map that will be consumed.
    */
-  fromSourceMap(sourceMap: SourceMapGenerator): Promise<BasicSourceMapConsumer>;
+  fromSourceMap(sourceMap: SourceMapGenerator): BasicSourceMapConsumer;
 }
 
 export const BasicSourceMapConsumer: BasicSourceMapConsumerConstructor;
@@ -278,7 +278,7 @@ export interface IndexedSourceMapConsumer extends SourceMapConsumer {
 export interface IndexedSourceMapConsumerConstructor {
   prototype: IndexedSourceMapConsumer;
 
-  new (rawSourceMap: RawIndexMap | string): Promise<IndexedSourceMapConsumer>;
+  new (rawSourceMap: RawIndexMap | string): IndexedSourceMapConsumer;
 }
 
 export const IndexedSourceMapConsumer: IndexedSourceMapConsumerConstructor;
