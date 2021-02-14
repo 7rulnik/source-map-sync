@@ -222,14 +222,14 @@ export interface SourceMapConsumerConstructor {
    * the consumer, since it will be called automatically once `f` completes.
    *
    * ```js
-   * const xSquared = await SourceMapConsumer.with(
+   * const xSquared = SourceMapConsumer.with(
    *   myRawSourceMap,
    *   null,
    *   async function (consumer) {
    *     // Use `consumer` inside here and don't worry about remembering
    *     // to call `destroy`.
    *
-   *     const x = await whatever(consumer);
+   *     const x = whatever(consumer);
    *     return x * x;
    *   }
    * );

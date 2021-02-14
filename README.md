@@ -35,7 +35,6 @@ Web is not supported in this fork. Use [original source-map](https://github.com/
     - [With SourceMapGenerator (low level API)](#with-sourcemapgenerator-low-level-api)
 - [API](#api)
   - [SourceMapConsumer](#sourcemapconsumer)
-    - [SourceMapConsumer.initialize(options)](#sourcemapconsumerinitializeoptions)
     - [new SourceMapConsumer(rawSourceMap)](#new-sourcemapconsumerrawsourcemap)
     - [SourceMapConsumer.with](#sourcemapconsumerwith)
     - [SourceMapConsumer.prototype.destroy()](#sourcemapconsumerprototypedestroy)
@@ -82,7 +81,7 @@ const rawSourceMap = {
   mappings: "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOC,IAAID;CCDb,IAAI,IAAM,SAAUE,GAClB,OAAOA"
 };
 
-const whatever = await SourceMapConsumer.with(rawSourceMap, null, consumer => {
+const whatever = SourceMapConsumer.with(rawSourceMap, null, consumer => {
   console.log(consumer.sources);
   // [ 'http://example.com/www/js/one.js',
   //   'http://example.com/www/js/two.js' ]
@@ -232,13 +231,13 @@ following attributes:
 
 - `file`: Optional. The generated filename this source map is associated with.
 
-The promise of the constructed souce map consumer is returned.
+The constructed souce map consumer is returned.
 
 When the `SourceMapConsumer` will no longer be used anymore, you must call its
 `destroy` method.
 
 ```js
-const consumer = await new sourceMap.SourceMapConsumer(rawSourceMapJsonData);
+const consumer = new sourceMap.SourceMapConsumer(rawSourceMapJsonData);
 doStuffWith(consumer);
 consumer.destroy();
 ```
@@ -259,11 +258,11 @@ By using `with`, you do not have to remember to manually call `destroy` on
 the consumer, since it will be called automatically once `f` completes.
 
 ```js
-const xSquared = await SourceMapConsumer.with(myRawSourceMap, null, async function(consumer) {
+const xSquared = SourceMapConsumer.with(myRawSourceMap, null, async function(consumer) {
   // Use `consumer` inside here and don't worry about remembering
   // to call `destroy`.
 
-  const x = await whatever(consumer);
+  const x = whatever(consumer);
   return x * x;
 });
 
@@ -654,7 +653,7 @@ Creates a SourceNode from generated code and a SourceMapConsumer.
   should be relative to.
 
 ```js
-const consumer = await new SourceMapConsumer(fs.readFileSync("path/to/my-file.js.map", "utf8"));
+const consumer = new SourceMapConsumer(fs.readFileSync("path/to/my-file.js.map", "utf8"));
 const node = SourceNode.fromStringWithSourceMap(fs.readFileSync("path/to/my-file.js"), consumer);
 ```
 
