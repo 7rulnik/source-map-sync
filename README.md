@@ -17,12 +17,7 @@ This is a library to generate and consume the source map format
 
 ## Use on the Web
 
-    <script src="https://unpkg.com/source-map@0.7.3/dist/source-map.js"></script>
-    <script>
-        sourceMap.SourceMapConsumer.initialize({
-            "lib/mappings.wasm": "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm"
-        });
-    </script>
+Web is not supported in this fork. Use [original source-map](https://github.com/mozilla/source-map#use-on-the-web) for it.
 
 ---
 
@@ -40,7 +35,6 @@ This is a library to generate and consume the source map format
     - [With SourceMapGenerator (low level API)](#with-sourcemapgenerator-low-level-api)
 - [API](#api)
   - [SourceMapConsumer](#sourcemapconsumer)
-    - [SourceMapConsumer.initialize(options)](#sourcemapconsumerinitializeoptions)
     - [new SourceMapConsumer(rawSourceMap)](#new-sourcemapconsumerrawsourcemap)
     - [SourceMapConsumer.with](#sourcemapconsumerwith)
     - [SourceMapConsumer.prototype.destroy()](#sourcemapconsumerprototypedestroy)
@@ -87,7 +81,7 @@ const rawSourceMap = {
   mappings: "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOC,IAAID;CCDb,IAAI,IAAM,SAAUE,GAClB,OAAOA"
 };
 
-const whatever = await SourceMapConsumer.with(rawSourceMap, null, consumer => {
+const whatever = SourceMapConsumer.with(rawSourceMap, null, consumer => {
   console.log(consumer.sources);
   // [ 'http://example.com/www/js/one.js',
   //   'http://example.com/www/js/two.js' ]
@@ -199,23 +193,6 @@ A `SourceMapConsumer` instance represents a parsed source map which we can query
 for information about the original file positions by giving it a file position
 in the generated source.
 
-#### SourceMapConsumer.initialize(options)
-
-When using `SourceMapConsumer` outside of node.js, for example on the Web, it
-needs to know from what URL to load `lib/mappings.wasm`. You must inform it by
-calling `initialize` before constructing any `SourceMapConsumer`s.
-
-The options object has the following properties:
-
-- `"lib/mappings.wasm"`: A `String` containing the URL of the
-  `lib/mappings.wasm` file, or an `ArrayBuffer` with the contents of `lib/mappings.wasm`.
-
-```js
-sourceMap.SourceMapConsumer.initialize({
-  "lib/mappings.wasm": "https://example.com/source-map/lib/mappings.wasm"
-});
-```
-
 #### new SourceMapConsumer(rawSourceMap)
 
 The only parameter is the raw source map (either as a string which can be
@@ -237,13 +214,13 @@ following attributes:
 
 - `file`: Optional. The generated filename this source map is associated with.
 
-The promise of the constructed souce map consumer is returned.
+The constructed souce map consumer is returned.
 
 When the `SourceMapConsumer` will no longer be used anymore, you must call its
 `destroy` method.
 
 ```js
-const consumer = await new sourceMap.SourceMapConsumer(rawSourceMapJsonData);
+const consumer = new sourceMap.SourceMapConsumer(rawSourceMapJsonData);
 doStuffWith(consumer);
 consumer.destroy();
 ```
@@ -264,11 +241,11 @@ By using `with`, you do not have to remember to manually call `destroy` on
 the consumer, since it will be called automatically once `f` completes.
 
 ```js
-const xSquared = await SourceMapConsumer.with(myRawSourceMap, null, async function(consumer) {
+const xSquared = SourceMapConsumer.with(myRawSourceMap, null, async function(consumer) {
   // Use `consumer` inside here and don't worry about remembering
   // to call `destroy`.
 
-  const x = await whatever(consumer);
+  const x = whatever(consumer);
   return x * x;
 });
 
@@ -659,7 +636,7 @@ Creates a SourceNode from generated code and a SourceMapConsumer.
   should be relative to.
 
 ```js
-const consumer = await new SourceMapConsumer(fs.readFileSync("path/to/my-file.js.map", "utf8"));
+const consumer = new SourceMapConsumer(fs.readFileSync("path/to/my-file.js.map", "utf8"));
 const node = SourceNode.fromStringWithSourceMap(fs.readFileSync("path/to/my-file.js"), consumer);
 ```
 

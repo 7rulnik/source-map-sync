@@ -2073,14 +2073,9 @@ exports["test line numbers < 0"] = async function(assert) {
 
 exports["test SourceMapConsumer.with"] = async function(assert) {
   let consumer = null;
-  const six = await SourceMapConsumer.with(util.testMap, null, async function(
-    c
-  ) {
+  const six = await SourceMapConsumer.with(util.testMap, null, function(c) {
     // Don't keep references to the consumer around at home, kids.
     consumer = c;
-
-    // We should properly treat the with callback as an async function.
-    await new Promise(r => setTimeout(r, 1));
 
     // Should not have parsed and allocated mappings yet.
     assert.equal(c._mappingsPtr, 0);

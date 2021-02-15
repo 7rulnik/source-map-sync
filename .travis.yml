@@ -4,15 +4,19 @@ sudo: false
 
 node_js:
   - "8"
-  - "9"
+  - "10"
+  - "12"
+  - "14"
+  - "15"
+  
 
 install:
-  - npm install
-  - npm install coveralls
+  - yarn
+  - yarn add coveralls
 
 script:
-  - npm run coverage
-  - npm run lint
+  - yarn run coverage
+  - yarn run lint
 
 after_success:
   - nyc report --reporter=text-lcov | coveralls
@@ -24,3 +28,4 @@ cache:
 os:
   - linux
   - osx
+  - windows
