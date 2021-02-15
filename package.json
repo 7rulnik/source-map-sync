@@ -61,6 +61,7 @@
   "scripts": {
     "lint": "eslint --fix *.js lib/ test/",
     "prebuild": "npm run lint",
+    "build-mappings": "node scripts/wasm-to-base64.js",
     "test": "node test/run-tests.js",
     "coverage": "nyc node test/run-tests.js",
     "setup": "mkdir -p coverage && cp -n .waiting.html coverage/index.html || true",
