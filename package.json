@@ -1,7 +1,7 @@
 {
   "name": "source-map-sync",
   "description": "Generates and consumes source maps",
-  "version": "0.8.0-beta.0",
+  "version": "0.8.0-beta.1",
   "homepage": "https://github.com/7rulnik/source-map-sync",
   "author": "Valentin Semirulnik <v7rulnik@gmail.com>",
   "contributors": [
